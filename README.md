@@ -14,6 +14,8 @@ Prerequisites: installed JDK 11.
 
 ## Usage
 
+### Simple usage
+
 Send HTTP request. Provide an absolute path to an image file for OCR as a parameter.
 ```
 http://localhost:8080/api/tess/path?absolute=<absolute_path_to_image_file>
@@ -23,3 +25,7 @@ Example:
 ```
 http://localhost:8080/api/tess/path?absolute=C:/dev/ocr/ocr-examples/src/test/resources/test_image.png
 ```
+
+### Swagger
+
+For more endpoints and parameters explore Swagger: http://localhost:8080/swagger-ui/
