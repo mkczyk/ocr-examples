@@ -1,10 +1,8 @@
 package pl.marcinkowalczyk.ocr.examples.tess;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,6 +13,11 @@ public class TessController {
 
     @GetMapping("/path")
     public String ocrByAbsolutePath(@RequestParam("absolute") String absolutePath) {
-        return tessService.ocr(absolutePath);
+        return tessService.ocrByAbsolutePath(absolutePath);
+    }
+
+    @PostMapping("/image")
+    public String ocrByImage(@RequestPart("file") MultipartFile image) {
+        return tessService.ocrByImage(image);
     }
 }
