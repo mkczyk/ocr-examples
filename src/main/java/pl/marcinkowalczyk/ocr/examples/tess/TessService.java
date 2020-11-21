@@ -3,9 +3,9 @@ package pl.marcinkowalczyk.ocr.examples.tess;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-import net.sourceforge.tess4j.util.LoadLibs;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.marcinkowalczyk.ocr.examples.tess.parameters.TessParameters;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,38 +16,30 @@ import java.io.IOException;
 @Slf4j
 public class TessService {
 
-    public String ocrByAbsolutePath(String absolutePath) {
+    public String ocrByAbsolutePath(String absolutePath, TessParameters parameters) {
+        log.debug("Starting OCR...");
         File imageFile = new File(absolutePath);
-        Tesseract tesseract = getTesseractInstance();
+        Tesseract tesseract = TessFactory.getTesseractInstance(parameters);
         try {
             String text = tesseract.doOCR(imageFile);
-            log.info(text);
+            log.info("Text: {}", text);
             return text;
         } catch (TesseractException e) {
             throw new TessException(String.format("Can't do OCR with Tesseract at path %s", absolutePath), e);
         }
     }
 
-    public String ocrByImage(MultipartFile imageFile) {
-        Tesseract tesseract = getTesseractInstance();
+    public String ocrByImage(MultipartFile imageFile, TessParameters parameters) {
+        log.debug("Starting OCR...");
+        Tesseract tesseract = TessFactory.getTesseractInstance(parameters);
         try {
             BufferedImage image = ImageIO.read(imageFile.getInputStream());
             String text = tesseract.doOCR(image);
-            log.info(text);
+            log.info("Text: {}", text);
             return text;
         } catch (TesseractException | IOException e) {
-            throw new TessException(String.format("Can't do OCR with Tesseract with file name %s", imageFile.getName()), e);
+            throw new TessException(String.format("Can't do OCR with Tesseract with file name %s",
+                    imageFile.getName()), e);
         }
-    }
-
-    private Tesseract getTesseractInstance() {
-        Tesseract tesseract = new Tesseract();
-        setDefaultDatapath(tesseract);
-        return tesseract;
-    }
-
-    private void setDefaultDatapath(Tesseract tesseract) {
-        File tessDataFolder = LoadLibs.extractTessResources("tessdata");
-        tesseract.setDatapath(tessDataFolder.getAbsolutePath());
     }
 }
