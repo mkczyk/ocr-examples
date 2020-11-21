@@ -22,6 +22,7 @@ public class TessService {
         Tesseract tesseract = TessFactory.getTesseractInstance(parameters);
         try {
             String text = tesseract.doOCR(imageFile);
+            text = addHOcrJsIfNeeded(text, parameters.isHOcr());
             log.info("Text: {}", text);
             return text;
         } catch (TesseractException e) {
@@ -35,11 +36,20 @@ public class TessService {
         try {
             BufferedImage image = ImageIO.read(imageFile.getInputStream());
             String text = tesseract.doOCR(image);
+            text = addHOcrJsIfNeeded(text, parameters.isHOcr());
             log.info("Text: {}", text);
             return text;
         } catch (TesseractException | IOException e) {
             throw new TessException(String.format("Can't do OCR with Tesseract with file name %s",
                     imageFile.getName()), e);
         }
+    }
+
+    private String addHOcrJsIfNeeded(String text, boolean isHOcr) {
+        if (isHOcr) {
+            return text.replace("</body>",
+                    "<script src=\"https://unpkg.com/hocrjs\"></script>\n</body>");
+        }
+        return text;
     }
 }

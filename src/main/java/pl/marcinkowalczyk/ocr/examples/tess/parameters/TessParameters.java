@@ -13,4 +13,5 @@ public class TessParameters {
 
     private TessOcrEngineMode engineMode = TessOcrEngineMode.OEM_DEFAULT;
     private TessPageSegmentationMode pageSegmentationMode = TessPageSegmentationMode.PSM_SINGLE_BLOCK;
+    private boolean hOcr = false;
 }

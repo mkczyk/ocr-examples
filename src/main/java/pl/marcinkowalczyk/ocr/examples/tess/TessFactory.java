@@ -19,6 +19,7 @@ public class TessFactory {
         setDefaultDataPath(tesseract);
         tesseract.setOcrEngineMode(parameters.getEngineMode().getValue());
         tesseract.setPageSegMode(parameters.getPageSegmentationMode().getValue());
+        tesseract.setHocr(parameters.isHOcr());
         return tesseract;
     }
 
