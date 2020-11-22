@@ -16,15 +16,17 @@ public class TessFactory {
     public static Tesseract getTesseractInstance(TessParameters parameters) {
         log.debug("Tesseract parameters {}", parameters);
         Tesseract tesseract = new Tesseract();
-        setDefaultDataPath(tesseract);
+        File tessDataFolder = getDataFolder();
+        tesseract.setDatapath(tessDataFolder.getAbsolutePath());
         tesseract.setOcrEngineMode(parameters.getEngineMode().getValue());
         tesseract.setPageSegMode(parameters.getPageSegmentationMode().getValue());
         tesseract.setHocr(parameters.isHOcr());
+        tesseract.setLanguage(parameters.getLanguages());
+        DictionaryDownloader.downloadDictIfNeeded(parameters.getLanguages(), tessDataFolder);
         return tesseract;
     }
 
-    private static void setDefaultDataPath(Tesseract tesseract) {
-        File tessDataFolder = LoadLibs.extractTessResources("tessdata");
-        tesseract.setDatapath(tessDataFolder.getAbsolutePath());
+    private static File getDataFolder() {
+        return LoadLibs.extractTessResources("tessdata");
     }
 }
