@@ -1,5 +1,6 @@
 package pl.marcinkowalczyk.ocr.examples.tess.text;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -16,12 +17,15 @@ import java.io.IOException;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class TessOcrTextService {
+
+    private final TessFactory tessFactory;
 
     public String ocrByAbsolutePath(String absolutePath, TessParameters parameters) {
         log.debug("Starting OCR...");
         File imageFile = new File(absolutePath);
-        Tesseract tesseract = TessFactory.getTesseractInstance(parameters);
+        Tesseract tesseract = tessFactory.getTesseractInstance(parameters);
         try {
             String text = tesseract.doOCR(imageFile);
             text = addHOcrJsIfNeeded(text, parameters.isHOcr());
@@ -34,7 +38,7 @@ public class TessOcrTextService {
 
     public String ocrByImage(MultipartFile imageFile, TessParameters parameters) {
         log.debug("Starting OCR...");
-        Tesseract tesseract = TessFactory.getTesseractInstance(parameters);
+        Tesseract tesseract = tessFactory.getTesseractInstance(parameters);
         try {
             BufferedImage image = ImageIO.read(imageFile.getInputStream());
             String text = tesseract.doOCR(image);

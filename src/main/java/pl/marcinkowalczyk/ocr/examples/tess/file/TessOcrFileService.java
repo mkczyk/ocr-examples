@@ -1,5 +1,6 @@
 package pl.marcinkowalczyk.ocr.examples.tess.file;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.ITessAPI;
 import net.sourceforge.tess4j.Tesseract;
@@ -13,13 +14,16 @@ import java.io.File;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class TessOcrFileService {
+
+    private final TessFactory tessFactory;
 
     public String ocrToFileByAbsolutePath(String absolutePath, TessParameters parameters,
                                           RenderedFormatOptions renderedFormatOptions) {
         log.debug("Starting OCR to file...");
         File sourceFile = new File(absolutePath);
-        Tesseract tesseract = TessFactory.getTesseractInstance(parameters);
+        Tesseract tesseract = tessFactory.getTesseractInstance(parameters);
         try {
             File destinationFile = getPathToNewFile(sourceFile, "_new");
             tesseract.createDocumentsWithResults(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath(),
