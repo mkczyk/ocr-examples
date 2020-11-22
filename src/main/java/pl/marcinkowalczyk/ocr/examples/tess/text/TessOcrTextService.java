@@ -1,10 +1,12 @@
-package pl.marcinkowalczyk.ocr.examples.tess;
+package pl.marcinkowalczyk.ocr.examples.tess.text;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pl.marcinkowalczyk.ocr.examples.tess.TessException;
+import pl.marcinkowalczyk.ocr.examples.tess.TessFactory;
 import pl.marcinkowalczyk.ocr.examples.tess.parameters.TessParameters;
 
 import javax.imageio.ImageIO;
@@ -14,7 +16,7 @@ import java.io.IOException;
 
 @Service
 @Slf4j
-public class TessService {
+public class TessOcrTextService {
 
     public String ocrByAbsolutePath(String absolutePath, TessParameters parameters) {
         log.debug("Starting OCR...");
