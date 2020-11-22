@@ -2,6 +2,33 @@
 
 OCR examples with Tesseract
 
+## Features
+
+### API for testing Tesseract
+
+* OCR image by absolute path to file
+* OCR image by sending file
+* Selecting Tesseract engine mode and page segmentation mode
+* Return result in text or HOcr
+* Specifying languages (missing dictionaries will be automatically downloaded)
+* Saving a file after OCR (text file, PDF with text layer)
+
+Look at Swagger for details: http://localhost:8080/swagger-ui/
+
+<sup>You have to have running application locally - see below.</sup>
+
+![Swagger endpoints](images/swagger-endpoints.png)
+
+![Swagger tess-ocr-text ocrByImage](images/swagger-tess-ocr-text-by-image.png)
+
+### Examples of usage
+
+* The simplest usage of Tesseract
+* Generating HOcr
+* OCR from PDF file using PDFBox
+
+Look at test folder for details: [pl.marcinkowalczyk.ocr.examples.tesseract](src/test/java/pl/marcinkowalczyk/ocr/examples/tesseract).
+
 ## Running
 
 Prerequisites: installed JDK 11.
