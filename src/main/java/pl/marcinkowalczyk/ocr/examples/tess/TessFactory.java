@@ -23,6 +23,7 @@ public class TessFactory {
         tesseract.setHocr(parameters.isHOcr());
         tesseract.setLanguage(parameters.getLanguages());
         DictionaryDownloader.downloadDictIfNeeded(parameters.getLanguages(), tessDataFolder);
+        tesseract.setTessVariable("user_defined_dpi", "300");
         return tesseract;
     }
 
