@@ -5,8 +5,8 @@ import net.sourceforge.tess4j.ITessAPI;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.springframework.stereotype.Service;
-import pl.marcinkowalczyk.ocr.examples.tess.TessException;
-import pl.marcinkowalczyk.ocr.examples.tess.TessFactory;
+import pl.marcinkowalczyk.ocr.examples.tess.exception.TessException;
+import pl.marcinkowalczyk.ocr.examples.tess.factory.TessFactory;
 import pl.marcinkowalczyk.ocr.examples.tess.parameters.TessParameters;
 
 import java.io.File;

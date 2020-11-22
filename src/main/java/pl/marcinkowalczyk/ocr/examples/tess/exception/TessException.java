@@ -1,4 +1,4 @@
-package pl.marcinkowalczyk.ocr.examples.tess;
+package pl.marcinkowalczyk.ocr.examples.tess.exception;
 
 public class TessException extends RuntimeException {
 

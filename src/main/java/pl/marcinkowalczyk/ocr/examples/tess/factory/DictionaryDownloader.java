@@ -1,9 +1,10 @@
-package pl.marcinkowalczyk.ocr.examples.tess;
+package pl.marcinkowalczyk.ocr.examples.tess.factory;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import pl.marcinkowalczyk.ocr.examples.tess.exception.TessException;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,12 +15,12 @@ import java.util.stream.Stream;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DictionaryDownloader {
+class DictionaryDownloader {
 
     private static final String DICT_URL = "https://github.com/tesseract-ocr/tessdata/raw/master/";
     private static final String DICT_EXTENSION = ".traineddata";
 
-    public static void downloadDictIfNeeded(String languagesParameter, File tessDataFolder) {
+    static void downloadDictIfNeeded(String languagesParameter, File tessDataFolder) {
         Set<String> languages = Set.of(languagesParameter.split("\\+"));
         Set<String> existingLanguages = getExistingLanguages(tessDataFolder);
         Set<String> missingLanguages = intersect(languages, existingLanguages);
